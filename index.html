@@ -3,10 +3,29 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-
+	<link rel="stylesheet" href="leaflet.css" />
+	 <script src="leaflet.js"></script>
+	<style>
+	#map {width: 1340px; height: 600px; }
+	</style>
 </head>
 
 <body>
+
+<!-- Добавляем область для отображения карты -->
+<div id="map"></div>
+ 
+<script type='text/javascript'>
+ 
+//Определяем карту, координаты центра и начальный масштаб
+var map = L.map('map').setView([52.7265, 41.4586], 12);
+ 
+//Добавляем на нашу карту слой OpenStreetMap
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a rel="nofollow" href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+ 
+</script>
 
 </body>
 
