@@ -12,39 +12,37 @@
 
 <body>
 
-<!-- Добавляем область для отображения карты -->
+<!-- Р”РѕР±Р°РІР»СЏРµРј РѕР±Р»Р°СЃС‚СЊ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РєР°СЂС‚С‹ -->
 <div id="map"></div>
  
 <script type='text/javascript'>
-var map = L.map('map',{//dragging:false, Откомментить для отключения возможности перемещения по карте 
+var map = L.map('map',{//dragging:false, РћС‚РєРѕРјРјРµРЅС‚РёС‚СЊ РґР»СЏ РѕС‚РєР»СЋС‡РµРЅРёСЏ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РїРµСЂРµРјРµС‰РµРЅРёСЏ РїРѕ РєР°СЂС‚Рµ 
 maxBounds:[[52.6517, 41.2680],[52.8613, 41.5780]]}).setView([52.7565, 41.4230], 12);
-//Добавляем на нашу карту слой OpenStreetMap
+//Р”РѕР±Р°РІР»СЏРµРј РЅР° РЅР°С€Сѓ РєР°СЂС‚Сѓ СЃР»РѕР№ OpenStreetMap
 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a rel="nofollow" href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
-/*var weatherControl = L.Control.extend({
-options:{
-position: 'topleft'
-},
-onAdd: function(map){
-return container;
-},
-});*/
-//Создаем кастомный контрол
+
+//РЎРѕР·РґР°РµРј РєР°СЃС‚РѕРјРЅС‹Р№ РєРѕРЅС‚СЂРѕР»
 var MyControl = L.Control.extend({
     options: {
-        position: 'topleft'//Позиция
+        position: 'topleft'//РџРѕР·РёС†РёСЏ
     },
 
     onAdd: function (map) {
-        // Создание контейнера контрола
+        // РЎРѕР·РґР°РЅРёРµ РєРѕРЅС‚РµР№РЅРµСЂР° РєРѕРЅС‚СЂРѕР»Р°
         var container = L.DomUtil.create('div', 'my-custom-control');
 
-        // Стиль контейнера
+        // РЎС‚РёР»СЊ РєРѕРЅС‚РµР№РЅРµСЂР°
 		container.style.backgroundColor = 'black';
+		container.style.backgroundImage = "url(http://i.imgur.com/h4jq7.png)";
+		container.style.backgroundSize = "27px 27px";
 		container.style.width = '27px';
 		container.style.height = '27px';
 		
+		container.onclick = function(){
+		L.marker([52.7565, 41.4230]).addTo(map).bindPopup("<b>РџСЂРёРјРµСЂ РІС‹РІРѕРґР° Р±Р°Р»СѓРЅР°</b><br /> РљР°Рє С‚Рѕ С‚Р°Рє").openPopup(true);
+		}
 		
         return container;
     }
