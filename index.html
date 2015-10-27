@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<link rel="stylesheet" href="leaflet.css" />
-	 <script src="leaflet.js"></script>
+	<script src='leaflet.js'></script>
 	<style>
 	#map {width: 1340px; height: 600px; }
 	</style>
@@ -15,16 +15,16 @@
 <!-- Добавляем область для отображения карты -->
 <div id="map"></div>
  
-<script type='text/javascript'>
-var map = L.map('map',{//dragging:false, Откомментить для отключения возможности перемещения по карте 
-maxBounds:[[52.6517, 41.2680],[52.8613, 41.5780]]}).setView([52.7565, 41.4230], 12);
-//Добавляем на нашу карту слой OpenStreetMap
-L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	<script type='text/javascript'>
+	var map = L.map('map',{//dragging:false, Откомментить для отключения возможности перемещения по карте 
+	maxBounds:[[52.6517, 41.2680],[52.8613, 41.5780]]}).setView([52.7565, 41.4230], 12);
+	//Добавляем на нашу карту слой OpenStreetMap
+	L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a rel="nofollow" href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+	}).addTo(map);
 
-//Создаем кастомный контрол
-var MyControl = L.Control.extend({
+	//Создаем кастомный контрол
+	var MyControl = L.Control.extend({
     options: {
         position: 'topleft'//Позиция
     },
@@ -39,9 +39,19 @@ var MyControl = L.Control.extend({
 		container.style.backgroundSize = "27px 27px";
 		container.style.width = '27px';
 		container.style.height = '27px';
-		
+
+	//Объект XMLHttpRequest (запрос к API)
+	var xhr = new XMLHttpRequest();
+
+	// 2. Конфигурируем его: GET-запрос на openweathermap'
+	xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=Tambov&mode=html&appid=4db4c7a9ac09694c25eeac0b990bba8b', false);
+
+	// 3. Отсылаем запрос
+	xhr.send();
+
 		container.onclick = function(){
-		L.marker([52.7565, 41.4230]).addTo(map).bindPopup("<b>Пример вывода балуна</b><br /> Как то так").openPopup(true);
+		
+		L.marker([52.7565, 41.4230]).addTo(map).bindPopup("" + xhr.responseText).openPopup();
 		}
 		
         return container;
@@ -50,7 +60,6 @@ var MyControl = L.Control.extend({
 
 map.addControl(new MyControl());
 </script>
-
 </body>
 
 </html>
