@@ -44,14 +44,36 @@
 	var xhr = new XMLHttpRequest();
 
 	// 2. Конфигурируем его: GET-запрос на openweathermap'
-	xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=Tambov&mode=html&appid=4db4c7a9ac09694c25eeac0b990bba8b', true);
+	xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=Tambov&lang=ru&units=metric&appid=4db4c7a9ac09694c25eeac0b990bba8b', true);
 
 	// 3. Отсылаем запрос
 	xhr.send();
 
-		container.onclick = function(){
+
 		
-		L.marker([52.7565, 41.4230]).addTo(map).bindPopup("" + xhr.responseText).openPopup();
+		
+	
+		
+		container.onclick = function(){
+		var otvet = xhr.responseText;
+		//if (otvet == null){
+		//L.marker([52.7565, 41.4230]).openOn(map).bindPopup("<img src=\"https://d13yacurqjgara.cloudfront.net/users/12755/screenshots/1037374/hex-loader2.gif\">").openPopup();
+		//}
+		var latlng = L.latLng(52.7565, 41.4230);
+		var cityname = otvet.indexOf("\"name\"") + 8;
+		var citycoordlat = otvet.indexOf("\"lat\"") + 6;
+		var citycoordlon = otvet.indexOf("\"lon\"") + 6;
+		var citydescr = otvet.indexOf("\"description\"") + 14;
+		var citytemp = otvet.indexOf("\"temp\"") + 7;
+		var citywind = otvet.indexOf("\"speed\"") + 8;
+		var popup = L.popup()
+		.setLatLng(latlng)
+		.setContent('<img src=\"https://d13yacurqjgara.cloudfront.net/users/12755/screenshots/1037374/hex-loader2.gif\" width=\"100\" height=\"100\">')
+		.openOn(map);
+		/*L.marker([52.7565, 41.4230]).addTo(map).bindPopup("<strong><h1>" + otvet.substr(cityname, 6) + "</h1></strong><br>"
+		+ "<b>Координаты: </b>" + otvet.substr(citycoordlon,5) + " / " + otvet.substr(citycoordlat,5) + "<br>"
+		+ "<b>Описание: </b>" + otvet.slice(citydescr,otvet.indexOf(",\"icon\":")) + "<br>" + "<b>Температура: </b>" + otvet.substr(citytemp,3)
+		+ "<br>" + "<b>Сила ветра: </b>" + otvet.substr(citywind,3)).openPopup().update();*/
 		}
 		
         return container;
