@@ -32,26 +32,29 @@
 	
 		//3. Отсылаем запрос
 		xhr.send();
-		
+
 		container.onclick = function(){
+		
+		
 		var otvet = xhr.responseText;
-		var latlng = L.latLng(52.7565, 41.4230);
 		var cityname = otvet.indexOf("\"name\"") + 8;
 		var citycoordlat = otvet.indexOf("\"lat\"") + 6;
 		var citycoordlon = otvet.indexOf("\"lon\"") + 6;
 		var citydescr = otvet.indexOf("\"description\"") + 14;
 		var citytemp = otvet.indexOf("\"temp\"") + 7;
 		var citywind = otvet.indexOf("\"speed\"") + 8;
-
+		
 		if (xhr.status != 200) {
+		
 		L.marker(latlng)
 		.addTo(map)
 		.bindPopup('<img src=\"images/owmloading.gif\" width=\"50\" height=\"50\">')
 		.openPopup();
 
 		} else {
-
-		L.marker(latlng)
+			
+		
+		var marker = L.marker(latlng)
 		.addTo(map)
 		.bindPopup("<strong><h1>" + otvet.substr(cityname, 6) + "</h1></strong><br>"
 		+ "<b>Координаты: </b>" + otvet.substr(citycoordlon,5) + " / " + otvet.substr(citycoordlat,5) + "<br>"
