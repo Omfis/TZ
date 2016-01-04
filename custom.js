@@ -35,6 +35,7 @@
 
 		container.onclick = function(){
 		
+		//var latlng = L.latLng(getCenter);
 		
 		var otvet = xhr.responseText;
 		var cityname = otvet.indexOf("\"name\"") + 8;
@@ -46,7 +47,7 @@
 		
 		if (xhr.status != 200) {
 		
-		L.marker(latlng)
+		L.marker(map.getCenter())
 		.addTo(map)
 		.bindPopup('<img src=\"images/owmloading.gif\" width=\"50\" height=\"50\">')
 		.openPopup();
@@ -54,7 +55,7 @@
 		} else {
 			
 		
-		var marker = L.marker(latlng)
+		var marker = L.marker(map.getCenter())
 		.addTo(map)
 		.bindPopup("<strong><h1>" + otvet.substr(cityname, 6) + "</h1></strong><br>"
 		+ "<b>Координаты: </b>" + otvet.substr(citycoordlon,5) + " / " + otvet.substr(citycoordlat,5) + "<br>"
