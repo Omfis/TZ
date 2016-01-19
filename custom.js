@@ -35,36 +35,35 @@
 
 		container.onclick = function(){
 		
-		//var latlng = L.latLng(getCenter);
-		
 		var otvet = xhr.responseText;
-		var cityname = otvet.indexOf("\"name\"") + 8;
-		var citycoordlat = otvet.indexOf("\"lat\"") + 6;
-		var citycoordlon = otvet.indexOf("\"lon\"") + 6;
-		var citydescr = otvet.indexOf("\"description\"") + 14;
-		var citytemp = otvet.indexOf("\"temp\"") + 7;
-		var citywind = otvet.indexOf("\"speed\"") + 8;
-		
+
+		/*name,coord.lat,coord.lon,weather.description,main.temp,wind.speed
+		выше имена используемых параметров. Параметр weather.description не желает использоваться как
+		собственно и все остальные подпараметры weather. Вывел их в комментарии, т.к. описание в мане уже не актуально*/
+
+		otvet = JSON.parse(otvet);
+
 		if (xhr.status != 200) {
 		
 		L.marker(map.getCenter())
 		.addTo(map)
 		.bindPopup('<img src=\"images/owmloading.gif\" width=\"50\" height=\"50\">')
-		.openPopup();
+		.openPopup().update();
 
 		} else {
 			
-		
-		var marker = L.marker(map.getCenter())
+		L.marker(map.getCenter())
 		.addTo(map)
-		.bindPopup("<strong><h1>" + otvet.substr(cityname, 6) + "</h1></strong><br>"
-		+ "<b>Координаты: </b>" + otvet.substr(citycoordlon,5) + " / " + otvet.substr(citycoordlat,5) + "<br>"
-		+ "<b>Описание: </b>" + otvet.slice(citydescr,otvet.indexOf(",\"icon\":")) + "<br>" + "<b>Температура: </b>"
-		+ otvet.substr(citytemp,3)	+ "<br>" + "<b>Сила ветра: </b>" + otvet.substr(citywind,3))
-		.openPopup();
+		.bindPopup("<strong><h1>" + otvet.name + "</h1></strong><br>"
+		+ "<b>Координаты: </b>" + otvet.coord.lon + " / " + otvet.coord.lat + "<br>"
+		+ "<b>Описание: </b>" + otvet.weather.description + "<br>" + "<b>Температура: </b>"
+		+ otvet.main.temp + "<br>" + "<b>Сила ветра: </b>" + otvet.wind.speed)
+		.openPopup().update();
+		
 		}
+		
 		}
-
+		
         return container;
     }
 });
