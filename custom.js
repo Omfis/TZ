@@ -1,4 +1,3 @@
-//<script type='text/javascript'>
 	window.onload = function(){ 
 	var map = L.map('map',{//dragging:false, Откомментить для отключения возможности перемещения по карте
 	maxBounds:[[52.6517, 41.2680],[52.8613, 41.5780]]}).setView([52.7565, 41.4230], 12);
@@ -34,7 +33,7 @@
 		xhr.send();
 
 		container.onclick = function(){
-		
+
 		var otvet = xhr.responseText;
 
 		/*name,coord.lat,coord.lon,weather.description,main.temp,wind.speed
@@ -43,15 +42,12 @@
 
 		otvet = JSON.parse(otvet);
 
-		if (xhr.status != 200) {
-		
 		L.marker(map.getCenter())
 		.addTo(map)
-		.bindPopup('<img src=\"images/owmloading.gif\" width=\"50\" height=\"50\">')
+		.bindPopup('<p></p><img src=\"images/owmloading.gif\" width=\"110\" height=\"110\">')
 		.openPopup().update();
-
-		} else {
-			
+		
+		function func(){	
 		L.marker(map.getCenter())
 		.addTo(map)
 		.bindPopup("<strong><h1>" + otvet.name + "</h1></strong><br>"
@@ -59,8 +55,8 @@
 		+ "<b>Описание: </b>" + otvet.weather.description + "<br>" + "<b>Температура: </b>"
 		+ otvet.main.temp + "<br>" + "<b>Сила ветра: </b>" + otvet.wind.speed)
 		.openPopup().update();
-		
 		}
+		setTimeout(func,3000);
 		
 		}
 		
@@ -70,4 +66,3 @@
 
 map.addControl(new MyControl());
 }
-//</script>
